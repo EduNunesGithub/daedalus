@@ -12,14 +12,17 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  console.debug("[END: dashboard]", { userId: session.user.id });
+  const orgs = await auth.api.listOrganizations({ headers: await headers() });
 
-  return (
-    <div className="flex min-h-screen items-center justify-center p-8">
-      <div className="flex flex-col gap-2 text-center">
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-muted-foreground">Welcome, {session.user.name}</p>
-      </div>
-    </div>
-  );
+  if (!orgs || orgs.length === 0) {
+    console.debug("[END: dashboard] no org — redirecting to create-workspace");
+    redirect("/create-workspace");
+  }
+
+  const active = session.session.activeOrganizationId
+    ? orgs.find((o) => o.id === session.session.activeOrganizationId)
+    : orgs[0];
+
+  console.debug("[END: dashboard]", { slug: active?.slug });
+  redirect(`/dashboard/${active?.slug}`);
 }
