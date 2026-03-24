@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
+    "better-auth": "^1.5.6",
     "drizzle-orm": "^0.45.1",
     "next": "16.2.1",
     "react": "19.2.4",
@@ -16,9 +17,14 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
     "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "prettier": "3.8.1",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "name": "page-builder",
   "private": true,
@@ -26,7 +32,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint",
-    "start": "next start"
+    "start": "next start",
+    "prepare": "husky"
   },
   "version": "0.1.0"
 }
