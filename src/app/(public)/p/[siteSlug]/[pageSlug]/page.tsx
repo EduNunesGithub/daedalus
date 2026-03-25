@@ -1,3 +1,4 @@
+import PageRenderer from "@/components/editor/renderer";
 import { db } from "@/db/index";
 import { page as pageTable, site as siteTable } from "@/db/schemas/schema";
 import { and, eq } from "drizzle-orm";
@@ -40,11 +41,23 @@ export default async function PublicPage({ params }: Props) {
     notFound();
   }
 
-  console.debug("[END: public-page]", { pageId: foundPage.id });
+  const content = foundPage.content ? JSON.stringify(foundPage.content) : null;
 
-  return (
-    <main>
-      <h1>{foundPage.title}</h1>
-    </main>
-  );
+  console.debug("[END: public-page]", {
+    pageId: foundPage.id,
+    hasContent: !!content,
+  });
+
+  if (!content) {
+    return (
+      <main className="p-8">
+        <h1 className="text-2xl font-semibold">{foundPage.title}</h1>
+        <p className="mt-2 text-muted-foreground">
+          This page has no content yet.
+        </p>
+      </main>
+    );
+  }
+
+  return <PageRenderer content={content} />;
 }

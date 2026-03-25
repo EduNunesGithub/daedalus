@@ -10,6 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { EyeIcon, PencilIcon } from "lucide-react";
+import Link from "next/link";
 
 interface Page {
   id: string;
@@ -20,7 +22,9 @@ interface Page {
 }
 
 interface PagesTableProps {
+  orgSlug: string;
   pages: Page[];
+  siteId: string;
   siteSlug: string;
 }
 
@@ -29,7 +33,12 @@ const STATUS_VARIANT: Record<string, "default" | "secondary"> = {
   published: "default",
 };
 
-export default function PagesTable({ pages, siteSlug }: PagesTableProps) {
+export default function PagesTable({
+  orgSlug,
+  pages,
+  siteId,
+  siteSlug,
+}: PagesTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -38,7 +47,7 @@ export default function PagesTable({ pages, siteSlug }: PagesTableProps) {
           <TableHead>Slug</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Updated</TableHead>
-          <TableHead className="w-12" />
+          <TableHead className="w-28" />
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -61,11 +70,28 @@ export default function PagesTable({ pages, siteSlug }: PagesTableProps) {
               }).format(p.updatedAt)}
             </TableCell>
             <TableCell>
-              <PageActions
-                pageId={p.id}
-                pageTitle={p.title}
-                status={p.status}
-              />
+              <div className="flex items-center justify-end gap-1">
+                <Link
+                  className="inline-flex size-8 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground"
+                  href={`/p/${siteSlug}/${p.slug}`}
+                  target="_blank"
+                  title="View page"
+                >
+                  <EyeIcon className="size-4" />
+                </Link>
+                <Link
+                  className="inline-flex size-8 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground"
+                  href={`/dashboard/${orgSlug}/sites/${siteId}/pages/${p.id}/edit`}
+                  title="Edit page"
+                >
+                  <PencilIcon className="size-4" />
+                </Link>
+                <PageActions
+                  pageId={p.id}
+                  pageTitle={p.title}
+                  status={p.status}
+                />
+              </div>
             </TableCell>
           </TableRow>
         ))}

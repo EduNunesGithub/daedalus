@@ -49,6 +49,23 @@ export async function updatePageStatus(input: {
   console.debug("[END: update-page-status]", input);
 }
 
+export async function updatePageContent(input: {
+  content: unknown;
+  id: string;
+}) {
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session) throw new Error("Unauthorized");
+
+  console.debug("[START: update-page-content]", { id: input.id });
+
+  await db
+    .update(page)
+    .set({ content: input.content })
+    .where(eq(page.id, input.id));
+
+  console.debug("[END: update-page-content]", { id: input.id });
+}
+
 export async function deletePage(input: { id: string }) {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) throw new Error("Unauthorized");

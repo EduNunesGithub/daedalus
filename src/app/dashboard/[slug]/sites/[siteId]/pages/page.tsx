@@ -56,7 +56,12 @@ export default async function PagesPage({ params }: Props) {
         </div>
         <CreatePageDialog siteId={siteId} workspaceId={org.id} />
       </div>
-      <PagesTable pages={pages} siteSlug={foundSite.slug} />
+      <PagesTable
+        orgSlug={slug}
+        pages={pages}
+        siteId={siteId}
+        siteSlug={foundSite.slug}
+      />
     </div>
   );
 }
