@@ -1,8 +1,7 @@
 import InviteDialog from "@/components/members/invite-dialog";
 import MembersTable from "@/components/members/members-table";
+import { getCachedOrganization, getCachedSession } from "@/lib/auth-cache";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 interface Props {
@@ -14,13 +13,9 @@ export default async function MembersPage({ params }: Props) {
 
   console.debug("[START: members-page]", { slug });
 
-  const hdrs = await headers();
   const [org, session] = await Promise.all([
-    auth.api.getFullOrganization({
-      headers: hdrs,
-      query: { organizationSlug: slug },
-    }),
-    auth.api.getSession({ headers: hdrs }),
+    getCachedOrganization(slug),
+    getCachedSession(),
   ]);
 
   if (!org) {

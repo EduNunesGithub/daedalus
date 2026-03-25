@@ -15,6 +15,13 @@
       "when": 1774317790025,
       "tag": "0001_strange_viper",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1774399041971,
+      "tag": "0002_brainy_starbolt",
+      "breakpoints": true
     }
   ]
 }

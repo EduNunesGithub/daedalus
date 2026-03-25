@@ -1,21 +1,20 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { getCachedOrganizations, getCachedSession } from "@/lib/auth-cache";
 import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
   console.debug("[START: dashboard]");
 
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await getCachedSession();
 
   if (!session) {
-    console.debug("[END: dashboard] unauthenticated — redirecting");
+    console.debug("[END: dashboard] unauthenticated");
     redirect("/login");
   }
 
-  const orgs = await auth.api.listOrganizations({ headers: await headers() });
+  const orgs = await getCachedOrganizations();
 
   if (!orgs || orgs.length === 0) {
-    console.debug("[END: dashboard] no org — redirecting to create-workspace");
+    console.debug("[END: dashboard] no org");
     redirect("/create-workspace");
   }
 

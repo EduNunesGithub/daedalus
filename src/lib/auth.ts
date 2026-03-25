@@ -1,6 +1,6 @@
 import * as authSchema from "@/db/schemas/auth-schema";
 import { db } from "@/db/index";
-import { betterAuth } from "better-auth";
+import { betterAuth } from "better-auth/minimal";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { organization } from "better-auth/plugins";
 
@@ -11,4 +11,10 @@ export const auth = betterAuth({
   }),
   emailAndPassword: { enabled: true },
   plugins: [organization()],
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60,
+    },
+  },
 });

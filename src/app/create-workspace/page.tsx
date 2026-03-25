@@ -31,6 +31,13 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
+function toSlug(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
+
 export default function CreateWorkspacePage() {
   const router = useRouter();
 
@@ -54,12 +61,6 @@ export default function CreateWorkspacePage() {
   });
 
   const name = form.watch("name");
-
-  const toSlug = (value: string) =>
-    value
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9-]/g, "");
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">

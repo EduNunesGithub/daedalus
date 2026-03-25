@@ -14,6 +14,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
+import { initials } from "@/lib/utils";
 import {
   BuildingIcon,
   LayoutDashboardIcon,
@@ -56,12 +57,7 @@ export default function AppSidebar({
   const base = `/dashboard/${currentSlug}`;
   const currentOrg = orgs.find((o) => o.slug === currentSlug);
 
-  const initials = user.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
+  const userInitials = initials(user.name);
 
   async function handleSignOut() {
     await authClient.signOut();
@@ -132,7 +128,7 @@ export default function AppSidebar({
             <SidebarMenuButton size="lg">
               <Avatar size="sm">
                 {user.image && <AvatarImage src={user.image} alt={user.name} />}
-                <AvatarFallback>{initials}</AvatarFallback>
+                <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col gap-0.5 overflow-hidden">
                 <span className="truncate text-sm font-medium">

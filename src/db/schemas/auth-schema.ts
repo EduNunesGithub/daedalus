@@ -1,12 +1,5 @@
 import { relations } from "drizzle-orm";
-import {
-  boolean,
-  index,
-  pgTable,
-  text,
-  timestamp,
-  uniqueIndex,
-} from "drizzle-orm/pg-core";
+import { boolean, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -81,18 +74,14 @@ export const verification = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
-export const organization = pgTable(
-  "organization",
-  {
-    createdAt: timestamp("created_at").notNull(),
-    id: text("id").primaryKey(),
-    logo: text("logo"),
-    metadata: text("metadata"),
-    name: text("name").notNull(),
-    slug: text("slug").notNull().unique(),
-  },
-  (table) => [uniqueIndex("organization_slug_uidx").on(table.slug)],
-);
+export const organization = pgTable("organization", {
+  createdAt: timestamp("created_at").notNull(),
+  id: text("id").primaryKey(),
+  logo: text("logo"),
+  metadata: text("metadata"),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+});
 
 export const member = pgTable(
   "member",

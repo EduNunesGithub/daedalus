@@ -1,6 +1,5 @@
+import { getCachedOrganization } from "@/lib/auth-cache";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -11,10 +10,7 @@ export default async function WorkspaceDashboardPage({ params }: Props) {
 
   console.debug("[START: workspace-dashboard]", { slug });
 
-  const org = await auth.api.getFullOrganization({
-    headers: await headers(),
-    query: { organizationSlug: slug },
-  });
+  const org = await getCachedOrganization(slug);
 
   console.debug("[END: workspace-dashboard]", { orgId: org?.id, slug });
 
