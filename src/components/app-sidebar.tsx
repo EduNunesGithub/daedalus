@@ -17,6 +17,7 @@ import { authClient } from "@/lib/auth-client";
 import { initials } from "@/lib/utils";
 import {
   BuildingIcon,
+  GlobeIcon,
   LayoutDashboardIcon,
   LogOutIcon,
   UsersIcon,
@@ -46,6 +47,7 @@ interface AppSidebarProps {
 const NAV_ITEMS = [
   { href: "", icon: LayoutDashboardIcon, label: "Overview" },
   { href: "/members", icon: UsersIcon, label: "Members" },
+  { href: "/sites", icon: GlobeIcon, label: "Sites" },
 ];
 
 export default function AppSidebar({

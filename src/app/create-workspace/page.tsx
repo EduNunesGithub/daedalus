@@ -17,6 +17,7 @@ import {
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
+import { toSlug } from "@/lib/utils";
 
 const schema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -30,13 +31,6 @@ const schema = z.object({
 });
 
 type FormValues = z.infer<typeof schema>;
-
-function toSlug(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9-]/g, "");
-}
 
 export default function CreateWorkspacePage() {
   const router = useRouter();
